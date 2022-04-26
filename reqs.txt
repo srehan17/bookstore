@@ -1,0 +1,19 @@
+Vendor
+- Can see all their books
+- Can see all sold books
+- Can see all unsold books
+- Can see all sold books in the last X days
+- Can update books that have not been sold yet
+
+Customer
+- Can see all available books ( available = not sold and not in any order)
+- Can search available books by title or author 
+- Can place an order with multiple books
+- Can edit an order (change the books in an order)
+- Can list all their orders (Order No, Date, No of Books, Status) - include
+- Can see details of one order (Order No, Date, No of Books, Status, Books details) - preload and include
+- Can cancel an order that has not been completed yet - order delete and change orderId to null -- cascade Delete (only foreign key nullify - not delete the book)
+
+Admin
+- Can see all received orders
+- Can change order status from received to complete

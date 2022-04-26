@@ -1,0 +1,115 @@
+Vendor --
+- id: autogen
+- name: text [not null, max length: 255]
+- createdAt: timestamp
+- updatedAt: timestamp
+*- books: has_many
+*- userLogin: has_one
+
+
+Book --
+- id: autogen -
+- title: text [not null, max length: 255] -
+- author: text [not null, max length: 255] - 
+- category: text [one of (fiction | humor | politics | science | tech)]
+- price: decimal [not null, min: 0, max: 10000]
+- sold: boolean [not null, default: false]
+- createdAt: timestamp
+- updatedAt: timestamp
+*- vendor: belongs_to [not null]
+*- order: belongs_to
+
+
+UserLogin --
+- email: text [not null, valid email]
+- password: text [not null]
+- createdAt: timestamp
+- updatedAt: timestamp
+- unique: true
+*- vendor: belongs_to
+*- customer: belongs_to
+*- userSessions: has_many 
+
+
+UserSession: --
+- id: autogen
+- authToken: text [unique, not null]
+- expiresAt: timestamp
+- createdAt: timestamp
+- updatedAt: timestamp
+
+
+Customer --
+- id: autogen
+- name: text [not null, max length: 255]
+- address: text [not null, max length: 500]
+- createdAt: timestamp
+- updatedAt: timestamp
+*- userLogin: has_one
+*- orders: has_many
+
+
+Order --
+- id: autogen
+- orderDate: timestamp
+- status: text [not null, one of (placed | shipped)]
+- createdAt: timestamp
+- updatedAt: timestamp
+*- customer: belongs_to [not null]
+*- books: has_many
+
+
+
+
+
+Access Patterns
+- create vendor
+- Create a book
+- Update a book as long as its not sold
+- List all available books
+	- List all available books sorted by price
+	- List all available books sorted by title
+	- List all available books that belong to an author A
+	- List all available books that belong to a category C
+	- List all available books whose title matches searchTerms K
+- Create an order
+- List all sold books for a Vendor V
+
+
+For UUIDs, use DataTypes.UUID. It becomes the UUID data type for PostgreSQL and SQLite, and CHAR(36) for MySQL.
+
+
+// allowed to add two duplicate books
+"Chestnut"	"245029-13729-299"	"PinkPanther"	"fiction"	33	false	"2022-04-21 22:42:23.337-04"	"2022-04-21 22:42:23.337-04"	1	
+"Chestnut"	"245029-13729-299"	"PinkPanther"	"fiction"	33	false	"2022-04-22 18:35:22.59-04"	"2022-04-22 18:35:22.59-04"	1	
+
+// how to validate foreign key
+
+
+// foreign key is needed where table cannot live by itself
+
+
+Relations:
+hasOne || belongsTo (customer has one UserLogin)
+hasMany || belongsTo (customer has many orders)
+belongsToMany || belongsToMany (customer belongs to many orders, can place many orders || order belongs to many customers)
+
+
+
+persons = [P1, P2, P3]
+
+
+//1)
+
+for (p of persons){
+    console.log(p.id)
+}
+
+
+// 2)
+
+persons.map(p=> {
+    
+    return p.id
+}) // [1,2,3]
+
