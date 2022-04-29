@@ -29,7 +29,7 @@ module.exports.deleteBook = async (id) => {
 
 
 // List all books for Vendor
-module.exports.listAllBooksForVendor = async (vendorId) => {
+module.exports.getBooksByVendor = async (vendorId) => {
     let booksForVendor = await models.Book.findAll(
         {
             where: 
@@ -42,7 +42,7 @@ module.exports.listAllBooksForVendor = async (vendorId) => {
     console.log(`Books for Vendor Id: ${vendorId}`)
     
     for (b of booksForVendor){
-        console.log(" > " + b.title + " by " + b.author + " sold by Vendor Name " + (await b.getVendor()).name) //vendor name not printed?
+        console.log(" > " + b.title + " by " + b.author + " sold by Vendor Name " + (await b.getVendor()).name)
     }
 
     return booksForVendor;
@@ -50,8 +50,8 @@ module.exports.listAllBooksForVendor = async (vendorId) => {
 
 
 // List all sold books for Vendor
-module.exports.listAllSoldBooksForVendor = async (vendorId) => {
-    let soldBooksForVendor = await models.Book.findAll(
+module.exports.getAllSoldBooksByVendor = async (vendorId) => {
+    let soldBooksByVendor = await models.Book.findAll(
         {
             where: 
             {
@@ -60,20 +60,20 @@ module.exports.listAllSoldBooksForVendor = async (vendorId) => {
             }
         }
     );
-    if (soldBooksForVendor.length == 0) {
+    if (soldBooksByVendor.length == 0) {
         return console.log("None sold");
     }
     console.log(`Sold Books for Vendor Id: ${vendorId}`)
-    await soldBooksForVendor.forEach(b =>{
+    soldBooksByVendor.forEach(b =>{
         console.log(" > " + b.title + " by " + b.author)
     })
-    return soldBooksForVendor;
+    return soldBooksByVendor;
 }
 
 
 // List all unsold books for Vendor
-module.exports.listAllUnsoldBooksForVendor = async (vendorId) => {
-    let unsoldBooksForVendor = await models.Book.findAll(
+module.exports.getAllUnsoldBooksByVendor = async (vendorId) => {
+    let unsoldBooksByVendor = await models.Book.findAll(
         {
             where: 
             {
@@ -84,7 +84,7 @@ module.exports.listAllUnsoldBooksForVendor = async (vendorId) => {
     );
 
     
-    let booksForVendor = await models.Book.findAll(
+    let booksByVendor = await models.Book.findAll(
         {
             where: 
             {
@@ -93,22 +93,22 @@ module.exports.listAllUnsoldBooksForVendor = async (vendorId) => {
         }
     );
     
-    if ((unsoldBooksForVendor.length == 0) && (unsoldBooksForVendor.length < booksForVendor.length)){ 
+    if ((unsoldBooksByVendor.length == 0) && (unsoldBooksByVendor.length < booksByVendor.length)){ 
         return console.log(`All of the books for Vendor Id ${vendorId} have been sold`);
     }
 
     console.log(`Unsold Books for Vendor Id: ${vendorId}`)
     
-    unsoldBooksForVendor.forEach(b =>{
+    unsoldBooksByVendor.forEach(b =>{
         console.log(" > " + b.title + " by " + b.author)
     })
     
-    return unsoldBooksForVendor;
+    return unsoldBooksByVendor;
 }
 
 
 // List all sold books for Vendor in the last X days
-module.exports.listAllSoldBooksForVendorInLastXDays = async (vendorId) => {
+module.exports.soldBooksForVendorInLastXDays = async (vendorId) => {
     
     const startedDate = new Date("2022-04-01 00:00:00");
     // const endDate = new Date("2020-12-26 00:00:00");
@@ -144,7 +144,7 @@ module.exports.listAllSoldBooksForVendorInLastXDays = async (vendorId) => {
 
 
 // Vendor can update book if it has not been sold yet
-module.exports.updateBookThatHasNotBeenSoldYet = async (params) => {
+module.exports.updateBookThatHasNotBeenSold = async (params) => {
     let bookToBeUpdated = await models.Book.update( 
         {
             title: params.title,
@@ -165,7 +165,7 @@ module.exports.updateBookThatHasNotBeenSoldYet = async (params) => {
     
 
 // Customer can see all available books ( available = not sold and not in any order)
-module.exports.listAllBooksThatHaveNotBeenSoldYet = async () => {
+module.exports.getBooksThatHaveNotBeenSold = async () => {
     let books = await models.Book.findAll(
         {
             where: {
@@ -175,7 +175,7 @@ module.exports.listAllBooksThatHaveNotBeenSoldYet = async () => {
     )
     console.log("***********************************\n")
     console.log("Books available for customer:")
-    await books.forEach(
+    books.forEach(
         b => 
         {
             console.log(`${b.title} by ${b.author}`)
@@ -187,7 +187,7 @@ module.exports.listAllBooksThatHaveNotBeenSoldYet = async () => {
 
 
 // Customer can list all not sold books by title 
-module.exports.listAllBooksByTitle = async (params) => {
+module.exports.getBooksByTitle = async (params) => {
     let booksByTitle = await models.Book.findAll(
         {
             where: {
@@ -202,7 +202,7 @@ module.exports.listAllBooksByTitle = async (params) => {
     );
     console.log("***********************************\n");
     console.log("Listing all books by title ")
-    await booksByTitle.forEach(b=> {
+    booksByTitle.forEach(b=> {
         console.log(b.title)
     });
     console.log("\n***********************************");
@@ -210,7 +210,7 @@ module.exports.listAllBooksByTitle = async (params) => {
 }
 
 // Customer can list all books by author 
-module.exports.listAllBooksByAuthor = async (author) => {
+module.exports.getBooksByAuthor = async (author) => {
     let booksByAuthor = await models.Book.findAll(
         {
             where: {
@@ -225,7 +225,7 @@ module.exports.listAllBooksByAuthor = async (author) => {
     );
     console.log("***********************************\n");
     console.log(`Searching books for Author ${author}`)
-    await booksByAuthor.forEach(b=> {
+    booksByAuthor.forEach(b=> {
         console.log(b.title)
     });
     console.log("\n***********************************");
@@ -241,3 +241,8 @@ module.exports.listAllBooksByAuthor = async (author) => {
 //     //console.log(books.map(b=> b.price))
 // }
 
+
+// - List all available books that belong to a category C
+
+
+// - List all available books whose title matches searchTerms K

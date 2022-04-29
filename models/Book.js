@@ -81,10 +81,9 @@ module.exports = function(sequelize, DataTypes) {
     Book.belongsTo(models.Order, {
       foreignKey: {
         name: 'orderId',
-        foreignKeyConstraint: true,
-        validate: {}         
+        foreignKeyConstraint: true
       }
-    })
+    });
 	};
 
   Book.prototype.vendorName = async function() {

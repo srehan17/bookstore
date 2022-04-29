@@ -113,3 +113,6 @@ persons.map(p=> {
     return p.id
 }) // [1,2,3]
 
+
+
+// contract // what values it takes // what the function does  

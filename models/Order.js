@@ -28,6 +28,7 @@ module.exports = function(sequelize, DataTypes) {
 
     Order.associate = function(models) {
         Order.hasMany(models.Book, {
+            onDelete: 'CASCADE',
             foreignKey: {
                 name: 'orderId',
                 foreignKeyConstraint: true            }
@@ -54,10 +55,7 @@ module.exports = function(sequelize, DataTypes) {
         orderBooks.forEach(b =>{
             console.log(" > " + b.title + " by " + b.author)
         })
-
         console.log("\n**************************************\n")
-        
     };
-
     return Order
   }

@@ -9,9 +9,9 @@ Customer
 - Can see all available books ( available = not sold and not in any order)
 - Can search available books by title or author 
 - Can place an order with multiple books
-- Can edit an order (change the books in an order)
-- Can list all their orders (Order No, Date, No of Books, Status) - include
-- Can see details of one order (Order No, Date, No of Books, Status, Books details) - preload and include
+- Can edit an order (change the books in an order) - need help
+- Can list all their orders (Order No, Date, No of Books, Status) - done
+- Can see details of one order (Order No, Date, No of Books, Status, Books details) - preload and include - done
 - Can cancel an order that has not been completed yet - order delete and change orderId to null -- cascade Delete (only foreign key nullify - not delete the book)
 
 Admin
