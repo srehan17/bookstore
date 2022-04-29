@@ -46,6 +46,7 @@ module.exports = function(sequelize, DataTypes) {
           foreignKey: {
               name: 'vendorId',
               unique: true
+              //TODO: Why no foreign key constraint ?
           }})
         UserLogin.belongsTo(models.Customer, {
           foreignKey: {
@@ -62,6 +63,7 @@ module.exports = function(sequelize, DataTypes) {
   
 // UserLogin --
 // - email: text [not null, valid email]
+// unique pincode
 // - password: text [not null]
 // - createdAt: timestamp
 // - updatedAt: timestamp

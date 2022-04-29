@@ -27,8 +27,10 @@ module.exports = function(sequelize, DataTypes) {
       })
 
     Order.associate = function(models) {
+        // TODO: ensure cascade action is nullify. Better to explicitly state that
         Order.hasMany(models.Book, {
-            onDelete: 'CASCADE',
+            onDelete: 'SET NULL',
+            hooks: true,
             foreignKey: {
                 name: 'orderId',
                 foreignKeyConstraint: true            }

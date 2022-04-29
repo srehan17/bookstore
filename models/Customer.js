@@ -34,6 +34,7 @@ module.exports = function(sequelize, DataTypes) {
           schema: 'public'
       })
       
+      // TODO: Indentation is not correct. Setup ESLINT/Prettier
       Customer.associate = function(models) {
         Customer.hasOne(models.UserLogin, {
           foreignKey: {

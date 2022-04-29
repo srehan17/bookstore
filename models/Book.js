@@ -1,3 +1,4 @@
+const {BookCategory} = require('../enums/BookCategory');
 module.exports = function(sequelize, DataTypes) {
 
   var Book = sequelize.define('Book',  {
@@ -44,9 +45,9 @@ module.exports = function(sequelize, DataTypes) {
     },
     category:{
         type: DataTypes.ENUM, 
-        values: ["fiction", "humour", "politics", "science", "tech"], // [one of (fiction | humor | politics | science | tech)] 
+        values: Object.values(BookCategory), // [one of (fiction | humor | politics | science | tech)] 
         // ENUM values can be accessed from the values property:  console.log(Book.getAttributes().category.values);
-        defaultValue: "fiction"
+        defaultValue: BookCategory.FICTION
     },
     price: {
         type: DataTypes.DECIMAL,
@@ -86,14 +87,14 @@ module.exports = function(sequelize, DataTypes) {
     });
 	};
 
-  Book.prototype.vendorName = async function() {
-    console.log("\n**************************************\n")
-    console.log("Book Id: " + this.id)
-    console.log("Book Title: " + this.title);  
-    let vendorName = (await this.getVendor()).name;
-    console.log("Vendor: " + vendorName)
-    console.log("\n**************************************\n")
-  };
+  // Book.prototype.vendorName = async function() {
+  //   console.log("\n**************************************\n")
+  //   console.log("Book Id: " + this.id)
+  //   console.log("Book Title: " + this.title);  
+  //   let vendorName = (await this.getVendor()).name;
+  //   console.log("Vendor: " + vendorName)
+  //   console.log("\n**************************************\n")
+  // };
   
   return Book
 }

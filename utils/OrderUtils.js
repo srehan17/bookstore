@@ -127,23 +127,11 @@ module.exports.getOrderDetails = async(orderId) => {
 
 // Can cancel an order that has not been completed yet - order delete and change orderId to null -- cascade Delete (only foreign key nullify - not delete the book)
 module.exports.cancelOrderThatHasNotBeenCompletedYet = async(orderId) => {
-    await models.Order.update( 
-        {
-            orderId: null
-        },
-        {
-            where: 
-            {
-                id: orderId,
-                status: "received"
-            }
-        }
-    );
-
     await models.Order.destroy(
         {
             where: {
-                id: orderId
+                id: orderId,
+                status: "received"
             }
         }
     ) 

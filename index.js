@@ -9,7 +9,6 @@ const customerUtils = require("./utils/CustomerUtils");
         // await models.sequelize.sync({alter: true});
         await models.sequelize.sync({force: true});
 
-
         // CREATE VENDORS
         let vendorTom = await vendorUtils.createVendor({name: "Tom", email: "tom@gmail.com", password: "secure123"})
         let vendorKatie = await vendorUtils.createVendor({name: "Katie", email: "katie@gmail.com", password: "abcd123"})
@@ -118,23 +117,25 @@ const customerUtils = require("./utils/CustomerUtils");
             }
         );
 
-        let secondOrder = await orderUtils.createOrder(
-            {
-                customerId: customerPinky.id, 
-                bookIds: [bookSat.id, bookBN.id]
-            }
-        );
+        // let secondOrder = await orderUtils.createOrder(
+        //     {
+        //         customerId: customerPinky.id, 
+        //         bookIds: [bookSat.id, bookBN.id]
+        //     }
+        // );
 
-        let thirdOrder = await orderUtils.createOrder(
-            {
-                customerId: customerPolly.id, 
-                bookIds: [bookSat.id, bookBBB.id, bookST.id]
-            }
-        );
+        // let thirdOrder = await orderUtils.createOrder(
+        //     {
+        //         customerId: customerPolly.id, 
+        //         bookIds: [bookSat.id, bookBBB.id, bookST.id]
+        //     }
+        // );
 
         await firstOrder.printOrder()
-        await secondOrder.printOrder()
-        await thirdOrder.printOrder()
+
+        // await firstOrder.destroy()
+        // await secondOrder.printOrder()
+        // await thirdOrder.printOrder()
 
         // await orderUtils.completeOrder(firstOrder.id)
 
@@ -187,6 +188,6 @@ const customerUtils = require("./utils/CustomerUtils");
         // await orderUtils.cancelOrderThatHasNotBeenCompletedYet(firstOrder.id);
     }
     catch(err){
-        console.log(err)
+        console.log(JSON.stringify(err, null, 3))
     }
 })()
