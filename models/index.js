@@ -1,44 +1,35 @@
 'use strict';
-
 const fs = require("fs")
 const path = require("path")
 const Sequelize = require("sequelize");
 const basename = path.basename(__filename)
-// const env = process.env.NODE_ENV || "development"
-// const envConfigs = require("../config/config")
-// const config = envConfigs[env]
+const env = process.env.NODE_ENV || "development"
+const {envConfigs} = require("../config/config")
+const config = envConfigs[env]
 const db = {}
 
-const sequelize =  new Sequelize(
-    "bookstore",
-    "postgres",
-    "postgres",
-    {
-      host: "localhost",
-      dialect: "postgres",
-      pool: {
-        max: 5,
-        min: 0,
-        idle: 10000
-      },
-      // // Data is stored in the file `database.sqlite` in the folder `db`.
-      // // Note that if you leave your app public, this database file will be copied if
-      // // someone forks your app. So don't use it to store sensitive information.
-      // storage: "./db/database.sqlite"
-    }
-  );
+// const sequelize =  new Sequelize(
+//   "bookstore",
+//   "postgres",
+//   "postgres",
+//   {
+//     host: "localhost",
+//     dialect: "postgres",
+//     pool: {
+//       max: 5,
+//       min: 0,
+//       idle: 10000
+//     }      
+//   }
+// );
 
-// let sequelize
-// if (config.url) {
-//   sequelize = new Sequelize(config.url, config)
-// } else {
-//   sequelize = new Sequelize(
-//     config.database,
-//     config.username,
-//     config.password,
-//     config
-//   )
-// }
+const sequelize =  new Sequelize(
+  config.database,
+  config.username,
+  config.password,
+  config.connection
+);
+
 
 const files = []
 const sortDir = (maniDir) => {
