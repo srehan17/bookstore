@@ -71,7 +71,6 @@ module.exports.updateOrder = async (orderId, bookIds) => {
     )
 }
 
-
 // Customer can see all their orders (Order No, Date, No of Books, Status)
 module.exports.getOrdersByCustomerId = async(customerId) => {
     let listOfAllOrders = await models.Order.findAll( 

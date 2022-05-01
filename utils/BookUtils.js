@@ -39,8 +39,12 @@ module.exports.getBooksByVendor = async (vendorId) => {
         }
     );
     
+
+
+    // TODO: Remove Debugging Code from here and other places in Utils too
+    // Write your debugging code in the main file.
+    // because if you forget to later remove it, it will have a serious performance penalty
     console.log(`Books for Vendor Id: ${vendorId}`)
-    
     for (b of booksForVendor){
         console.log(" > " + b.title + " by " + b.author + " sold by Vendor Name " + (await b.getVendor()).name)
     }
@@ -49,8 +53,34 @@ module.exports.getBooksByVendor = async (vendorId) => {
 }
 
 
+/* 
+    TODO:  Can you combine 
+    - getAllSoldBooksByVendor
+    - getAllUnsoldBooksByVendor
+    - soldBooksForVendorInLastXDays
+    - getBooksThatHaveNotBeenSold
+    - getBooksByTitle
+    - getBooksByAuthor
+
+    into one function with parameter options
+    i.e 
+    getBooks(options)    
+    {
+        vendorId:
+        authorId:
+        sort:{ 
+            field:
+            order: 
+        }
+        sold: 
+    }
+
+*/
+
+
 // List all sold books for Vendor
 module.exports.getAllSoldBooksByVendor = async (vendorId) => {
+
     let soldBooksByVendor = await models.Book.findAll(
         {
             where: 
@@ -60,6 +90,8 @@ module.exports.getAllSoldBooksByVendor = async (vendorId) => {
             }
         }
     );
+
+    
     if (soldBooksByVendor.length == 0) {
         return console.log("None sold");
     }
@@ -108,6 +140,7 @@ module.exports.getAllUnsoldBooksByVendor = async (vendorId) => {
 
 
 // List all sold books for Vendor in the last X days
+// TODO: This is incomplete, take the X days as paramter
 module.exports.soldBooksForVendorInLastXDays = async (vendorId) => {
     
     const startedDate = new Date("2022-04-01 00:00:00");
