@@ -1,7 +1,13 @@
 const models = require("../models");
 const book = require("../models/book");
 
-// Create an order
+/**
+ * Creates an order
+ * @param {int} customerId - id of customer whose order needs to be created 
+ * @returns 1 if the order is created, 0 if no order is created
+ * @throws {Error} - customerId must be passed
+ * @throws {Error} - address must be passed
+ */
 module.exports.createOrder = async (params) => {
     let order = await models.Order.create(
         {
@@ -39,6 +45,7 @@ module.exports.completeOrder = async(orderId) => {
             }
         }
     )
+    return order;
 }
 
 // Customer can change an order: update all previous books to a new selecton of books
@@ -81,13 +88,6 @@ module.exports.getOrdersByCustomerId = async(customerId) => {
             }
         }
     )
-
-    for (b of listOfAllOrders) {
-        console.log(`-----------LIST OF ALL ORDERS FOR CUSTOMER: ${(await b.getCustomer()).name}----------------\n`)
-        console.log(`Order No: ${b.id}, Order Date: ${b.orderDate}, Number of Books: ${(await b.getBooks()).length}, Order status: ${b.status}`);
-    }
-    console.log("\n-------------------------------------------------")
-
     return listOfAllOrders;
 }
 
@@ -107,19 +107,6 @@ module.exports.getOrderDetails = async(orderId) => {
             }
         }
     );
-
-    let order = await JSON.stringify(orderDetails, null, 4);
-    // console.log(order);
-    let parsedObject = await JSON.parse(order);
-    // console.log(parsedObject);
-    let books = parsedObject[0]["Books"];
-
-    console.log("**********************************************\n");
-    console.log(`Order No: ${parsedObject[0].id} \n Order Date: ${parsedObject[0].orderDate} \n Number of Books: ${(await books.length)} \n Status: ${parsedObject[0].status}`);
-    console.log("\n List of books in this order: ")
-    books.forEach(b=> {console.log(`\t ${b.title} by ${b.author}`)});
-    console.log("\n**********************************************");
-    
     return orderDetails;
 }
 

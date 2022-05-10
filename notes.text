@@ -116,3 +116,26 @@ persons.map(p=> {
 
 
 // contract // what values it takes // what the function does  
+
+
+
+// let order = await JSON.stringify(orderDetails, null, 4);
+// // console.log(order);
+// let parsedObject = await JSON.parse(order);
+// // console.log(parsedObject);
+// let books = parsedObject[0]["Books"];
+
+// console.log("**********************************************\n");
+// console.log(`Order No: ${parsedObject[0].id} \n Order Date: ${parsedObject[0].orderDate} \n Number of Books: ${(await books.length)} \n Status: ${parsedObject[0].status}`);
+// console.log("\n List of books in this order: ")
+// books.forEach(b=> {console.log(`\t ${b.title} by ${b.author}`)});
+// console.log("\n**********************************************");
+
+
+
+    // for (b of listOfAllOrders) {
+    //     console.log(`-----------LIST OF ALL ORDERS FOR CUSTOMER: ${(await b.getCustomer()).name}----------------\n`)
+    //     console.log(`Order No: ${b.id}, Order Date: ${b.orderDate}, Number of Books: ${(await b.getBooks()).length}, Order status: ${b.status}`);
+    // }
+    // console.log("\n-------------------------------------------------")
+

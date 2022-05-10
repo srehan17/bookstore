@@ -44,20 +44,20 @@ module.exports = function(sequelize, DataTypes) {
         })
     };
 
-    Order.prototype.printOrder = async function(){
-        console.log("\n**************************************\n")
-        console.log("Order Id: " + this.id)
-        console.log("Order Date: " + this.orderDate)
-        let customerName = (await this.getCustomer()).name 
-        console.log("Customer: " + customerName)
+    // Order.prototype.printOrder = async function(){
+    //     console.log("\n**************************************\n")
+    //     console.log("Order Id: " + this.id)
+    //     console.log("Order Date: " + this.orderDate)
+    //     let customerName = (await this.getCustomer()).name 
+    //     console.log("Customer: " + customerName)
         
-        console.log("Books: ")
+    //     console.log("Books: ")
 
-        let orderBooks = await this.getBooks()
-        orderBooks.forEach(b =>{
-            console.log(" > " + b.title + " by " + b.author)
-        })
-        console.log("\n**************************************\n")
-    };
+    //     let orderBooks = await this.getBooks()
+    //     orderBooks.forEach(b =>{
+    //         console.log(" > " + b.title + " by " + b.author)
+    //     })
+    //     console.log("\n**************************************\n")
+    // };
     return Order
   }

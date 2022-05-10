@@ -6,9 +6,15 @@ beforeAll(async () => {
 });
 
 
-
+// test for vendor // expect vendorTom to be defined // expect added vendor name to be correct // user login to match user login table
 test('vendor is created', async () => {    
-    let vendorTom = await vendorUtils.createVendor({name: "Tom", email: "tom@gmail.com", password: "secure123"})    
+    let vendorTom = await vendorUtils.createVendor(
+        {
+            name: "Tom", 
+            email: "tom@gmail.com", 
+            password: "secure123"
+        }
+    )    
     expect(vendorTom).toBeDefined();
 
     let loadedVendor = await models.Vendor.findByPk(vendorTom.id);
@@ -16,7 +22,7 @@ test('vendor is created', async () => {
     
     let loadedVendorUserLogin = await models.UserLogin.findOne({where: {email: "tom@gmail.com"}});
     expect(loadedVendorUserLogin).toBeDefined();
-    expect(loadedVendorUserLogin.vendorId).toBe(loadedVendor.id)
+    expect(loadedVendorUserLogin.vendorId).toBe(loadedVendor.id);
 
 });
 
