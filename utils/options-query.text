@@ -1,0 +1,48 @@
+
+// will return all books by vendor 34 in default sort order
+getBooks({
+    vendorId: 34
+})
+
+
+// will return all books by vendor 34 written by author 5 in default sort order
+getBooks({
+    vendorId: 34,
+    authorId: 5
+})
+
+// will return all books written by author 5 in default sort order
+getBooks({
+    authorId: 5
+})
+
+// will return all books by vendor 34 written by author 5 in sorted by title ascending
+getBooks({
+    vendorId: 34,
+    authorId: 5,
+    sort: [
+        {
+            field: "title",
+            order: "ASC"
+        },
+        {
+            field: "author",
+            order: "DESC"
+        }
+    ]
+})
+
+
+
+
+query = {}
+
+if(options["vendorId"]){
+    query["vendorId"] = options["vendorId"]
+}
+
+
+if(options["authorId"]){
+    query["authorId"] = options["authorId"]
+}
+
