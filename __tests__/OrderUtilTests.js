@@ -15,7 +15,6 @@ test('order is created', async () => {
         // CREATE VENDORS
         let vendorTom = await vendorUtils.createVendor({name: "Tom", email: "tom@gmail.com", password: "secure123"})
         let vendorKatie = await vendorUtils.createVendor({name: "Katie", email: "katie@gmail.com", password: "abcd123"})
-        let vendorDarcy = await vendorUtils.createVendor({name: "Darcy", email: "darcy@headphones.com", password: "abc123"})
         
         // CREATE BOOKS
         let bookLBT =  await bookUtils.createBook(
@@ -57,10 +56,24 @@ test('order is created', async () => {
             }
         );
 
-    let firstOrder = await orderUtils.createOrder({customerId: customerSuzy.id, bookIds: [bookLBT.id, bookBBB.id, bookTIWH.id]})    
+    let firstOrder = await orderUtils.createOrder(
+        {
+            customerId: customerSuzy.id, 
+            orderDate: "2022-02-02",
+            status: "received",
+            bookIds: [bookLBT.id, bookBBB.id, bookTIWH.id]
+        }
+    )    
     expect(firstOrder).toBeDefined();
-
 });
+
+// test('order is completed', async () => {
+//     let order = await orderUtils.completeOrder(firstOrder.id);
+//     expect(order.status).toBe("completed");
+// });    
+
+
+
 
 afterAll(async () => {
     await models.sequelize.close();

@@ -1,8 +1,6 @@
 const Sequelize = require("sequelize");
 module.exports = function(sequelize, DataTypes) {
 
-    // Create an order 
-
     var Order = sequelize.define('Order',  {
         id: {
             type: DataTypes.INTEGER,
@@ -15,7 +13,7 @@ module.exports = function(sequelize, DataTypes) {
             defaultValue: Sequelize.fn('now')
         },
         status: { 
-            type: DataTypes.ENUM("received", "completed"), //console.log(Order.getAttributes().status.values);
+            type: DataTypes.ENUM("received", "completed"),
             allowNull: false,
             defaultValue: "received"
         },     

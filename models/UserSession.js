@@ -12,8 +12,12 @@ module.exports = function(sequelize, DataTypes) {
         unique: true,
         validate: {
           notNull: {
-            msg: 'Please provide authtoken'
+            msg: 'authtoken is null'
+          },
+          notEmpty: {
+            msg: 'authtoken is empty'
           }
+
         }
       },
       password: {
@@ -21,7 +25,10 @@ module.exports = function(sequelize, DataTypes) {
         allowNull: false,
         validate: {
           notNull: {
-            msg: 'Please enter password'
+            msg: 'password is null'
+          },
+          notEmpty: {
+            msg: 'password is empty'
           }
         }
       },

@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1652158432824" clover="3.2.0">
-  <project timestamp="1652158432824" name="All files">
-    <metrics statements="143" coveredstatements="104" conditionals="20" coveredconditionals="5" methods="33" coveredmethods="22" elements="196" coveredelements="131" complexity="0" loc="143" ncloc="143" packages="4" files="13" classes="13"/>
+<coverage generated="1652236861561" clover="3.2.0">
+  <project timestamp="1652236861562" name="All files">
+    <metrics statements="143" coveredstatements="107" conditionals="20" coveredconditionals="5" methods="33" coveredmethods="23" elements="196" coveredelements="135" complexity="0" loc="143" ncloc="143" packages="4" files="13" classes="13"/>
     <package name="config">
       <metrics statements="2" coveredstatements="2" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
       <file name="config.js" path="C:\Users\sarah\OneDrive\Desktop\bookstore\config\config.js">
         <metrics statements="2" coveredstatements="2" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
         <line num="1" count="4" type="stmt"/>
-        <line num="33" count="4" type="stmt"/>
+        <line num="34" count="4" type="stmt"/>
       </file>
     </package>
     <package name="enums">
@@ -115,14 +115,14 @@
       </file>
     </package>
     <package name="utils">
-      <metrics statements="67" coveredstatements="29" conditionals="12" coveredconditionals="0" methods="14" coveredmethods="3"/>
+      <metrics statements="67" coveredstatements="32" conditionals="12" coveredconditionals="0" methods="14" coveredmethods="4"/>
       <file name="BookUtils.js" path="C:\Users\sarah\OneDrive\Desktop\bookstore\utils\BookUtils.js">
         <metrics statements="30" coveredstatements="9" conditionals="12" coveredconditionals="0" methods="5" coveredmethods="1"/>
         <line num="1" count="2" type="stmt"/>
         <line num="2" count="2" type="stmt"/>
         <line num="3" count="2" type="stmt"/>
         <line num="6" count="2" type="stmt"/>
-        <line num="7" count="1" type="stmt"/>
+        <line num="7" count="4" type="stmt"/>
         <line num="26" count="2" type="stmt"/>
         <line num="27" count="0" type="cond" truecount="0" falsecount="2"/>
         <line num="28" count="0" type="stmt"/>
@@ -153,47 +153,47 @@
         <metrics statements="6" coveredstatements="6" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
         <line num="1" count="2" type="stmt"/>
         <line num="12" count="2" type="stmt"/>
-        <line num="13" count="1" type="stmt"/>
-        <line num="14" count="1" type="stmt"/>
-        <line num="16" count="1" type="stmt"/>
-        <line num="18" count="1" type="stmt"/>
+        <line num="13" count="2" type="stmt"/>
+        <line num="14" count="2" type="stmt"/>
+        <line num="16" count="2" type="stmt"/>
+        <line num="18" count="2" type="stmt"/>
       </file>
       <file name="OrderUtils.js" path="C:\Users\sarah\OneDrive\Desktop\bookstore\utils\OrderUtils.js">
-        <metrics statements="25" coveredstatements="8" conditionals="0" coveredconditionals="0" methods="7" coveredmethods="0"/>
+        <metrics statements="25" coveredstatements="11" conditionals="0" coveredconditionals="0" methods="7" coveredmethods="1"/>
         <line num="1" count="1" type="stmt"/>
         <line num="2" count="1" type="stmt"/>
         <line num="11" count="1" type="stmt"/>
-        <line num="12" count="0" type="stmt"/>
-        <line num="17" count="0" type="stmt"/>
-        <line num="29" count="0" type="stmt"/>
-        <line num="32" count="1" type="stmt"/>
-        <line num="33" count="0" type="stmt"/>
-        <line num="34" count="0" type="stmt"/>
-        <line num="35" count="0" type="stmt"/>
-        <line num="37" count="0" type="stmt"/>
-        <line num="38" count="0" type="stmt"/>
+        <line num="12" count="1" type="stmt"/>
+        <line num="17" count="1" type="stmt"/>
+        <line num="29" count="1" type="stmt"/>
+        <line num="39" count="1" type="stmt"/>
+        <line num="40" count="0" type="stmt"/>
+        <line num="41" count="0" type="stmt"/>
+        <line num="42" count="0" type="stmt"/>
         <line num="44" count="0" type="stmt"/>
-        <line num="48" count="0" type="stmt"/>
-        <line num="53" count="1" type="stmt"/>
+        <line num="45" count="0" type="stmt"/>
+        <line num="51" count="0" type="stmt"/>
         <line num="55" count="0" type="stmt"/>
-        <line num="67" count="0" type="stmt"/>
-        <line num="82" count="1" type="stmt"/>
-        <line num="83" count="0" type="stmt"/>
-        <line num="91" count="0" type="stmt"/>
-        <line num="96" count="1" type="stmt"/>
-        <line num="97" count="0" type="stmt"/>
-        <line num="110" count="0" type="stmt"/>
-        <line num="115" count="1" type="stmt"/>
-        <line num="116" count="0" type="stmt"/>
+        <line num="67" count="1" type="stmt"/>
+        <line num="69" count="0" type="stmt"/>
+        <line num="81" count="0" type="stmt"/>
+        <line num="103" count="1" type="stmt"/>
+        <line num="104" count="0" type="stmt"/>
+        <line num="112" count="0" type="stmt"/>
+        <line num="123" count="1" type="stmt"/>
+        <line num="124" count="0" type="stmt"/>
+        <line num="137" count="0" type="stmt"/>
+        <line num="148" count="1" type="stmt"/>
+        <line num="149" count="0" type="stmt"/>
       </file>
       <file name="VendorUtils.js" path="C:\Users\sarah\OneDrive\Desktop\bookstore\utils\VendorUtils.js">
         <metrics statements="6" coveredstatements="6" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
         <line num="1" count="3" type="stmt"/>
         <line num="10" count="3" type="stmt"/>
-        <line num="11" count="1" type="stmt"/>
-        <line num="12" count="1" type="stmt"/>
-        <line num="14" count="1" type="stmt"/>
-        <line num="16" count="1" type="stmt"/>
+        <line num="11" count="4" type="stmt"/>
+        <line num="12" count="4" type="stmt"/>
+        <line num="14" count="4" type="stmt"/>
+        <line num="16" count="4" type="stmt"/>
       </file>
     </package>
   </project>

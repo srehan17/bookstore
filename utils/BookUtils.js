@@ -2,7 +2,15 @@ const models = require("../models");
 const { Op } = require('sequelize');
 const book = require("../models/book");
 
-// create a book
+/**
+ * Create a book
+ * @param {string} title - title of book to be created 
+ * @param {string} author - author of book to be created 
+ * @param {string} isbn - isbn of book to be created 
+ * @param {decimal} price - price of book to be created 
+ * @returns created book 
+ * @throws {Error}
+ */
 module.exports.createBook = async (params) => {
     return await models.Book.create(
         {
@@ -22,7 +30,6 @@ module.exports.createBook = async (params) => {
  * @returns 1 if the book was found and deleted, 0 if no book with id was found
  * @throws {Error} - Id must be passed
  */
-
 module.exports.deleteBook = async (id) => {
     if(!id){
         throw new Error("id is required")
@@ -37,9 +44,13 @@ module.exports.deleteBook = async (id) => {
     )
 }
 
-
+/**
+ * gets book with options
+ * @param {integer} id - Id of the book to be deleted 
+ * @returns 1 if the book was found and deleted, 0 if no book with id was found
+ * @throws {Error} - Id must be passed
+ */
 module.exports.getBooks = async (options) => {
-
     query = {};
 
     if(options["vendorId"]){

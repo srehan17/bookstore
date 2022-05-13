@@ -5,9 +5,8 @@ const models = require("../models");
  * Creates a customer
  * @param {string} name - name of customer to be created 
  * @param {string} address - address of customer to be created 
- * @returns 1 if the customer is created, 0 if no customer is created
- * @throws {Error} - name must be passed
- * @throws {Error} - address must be passed
+ * @returns created customer
+ * @throws {Error}
  */
 module.exports.createCustomer = async (params) => {
     let customer = models.Customer.build({name: params.name, address: params.address});

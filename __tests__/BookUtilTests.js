@@ -11,8 +11,8 @@ beforeAll(async () => {
 // test for book // expect bookLBT to be defined // expect added book title (and other details) to be correct // vendorId to be correct
 test('book is created', async () => {    
 
-// Create vendorTom
-let vendorTom = await vendorUtils.createVendor({name: "Tom", email: "tom@gmail.com", password: "secure123"})
+    // Create vendorTom
+    let vendorTom = await vendorUtils.createVendor({name: "Tom", email: "tom@gmail.com", password: "secure123"})
 
 
     let bookLBT = await bookUtils.createBook(
@@ -30,8 +30,7 @@ let vendorTom = await vendorUtils.createVendor({name: "Tom", email: "tom@gmail.c
     expect(loadedBook.title).toBe("Little Blue Truck");
     expect(loadedBook.isbn).toBe("245029-13729-298");
     expect(loadedBook.author).toBe("BlueTruckAuthor");
-    // expect(loadedBook.price).toBe(25);   Expected: 25 Received: "25" ???????????????????
-     
+    expect(loadedBook.price).toBeCloseTo(25); 
 });
 
 afterAll(async () => {

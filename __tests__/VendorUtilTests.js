@@ -1,8 +1,7 @@
 const models = require("../models");
 const vendorUtils = require("../utils/VendorUtils");
 
-beforeAll(async () => {
-    await models.sequelize.sync({force: true});
+beforeAll(async () => {await models.sequelize.sync({force: true});
 });
 
 

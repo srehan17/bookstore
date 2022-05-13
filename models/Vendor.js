@@ -9,7 +9,18 @@ module.exports = function(sequelize, DataTypes) {
       name: {
         type: DataTypes.STRING,
         allowNull: false,
-        max: 255
+        validate: {
+          notNull: {
+            msg: 'vendor name null'
+          },
+          notEmpty: {
+            msg: 'vendor name empty'
+          },
+          len: {
+            args: [1,255],
+            msg: 'vendor name should be less than 255' 
+          }
+        }
       },
     },  {
       tableName: 'Vendor',
