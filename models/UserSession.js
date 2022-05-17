@@ -1,3 +1,4 @@
+const Sequelize = require("sequelize");
 module.exports = function(sequelize, DataTypes) {
     
     var UserSession = sequelize.define('UserSession',  {
@@ -6,7 +7,7 @@ module.exports = function(sequelize, DataTypes) {
         autoIncrement: true,
         primaryKey: true,
       },
-      authtoken: {
+      authToken: {
         type: DataTypes.TEXT,
         allowNull: false,
         unique: true,
@@ -15,18 +16,11 @@ module.exports = function(sequelize, DataTypes) {
             msg: 'Please provide authtoken'
           }
         }
-      },
-      password: {
-        type: DataTypes.TEXT,
+      },      
+      createdAt: {
+        type: DataTypes.DATE,
         allowNull: false,
-        validate: {
-          notNull: {
-            msg: 'Please enter password'
-          }
-        }
-      },
-      expiresAt: {
-        type: DataTypes.DATE      
+        defaultValue: Sequelize.fn('now')      
       }
     },  
     {

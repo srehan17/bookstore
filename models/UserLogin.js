@@ -1,3 +1,5 @@
+const bcrypt = require("bcrypt");
+
 module.exports = function(sequelize, DataTypes) {
 
     
@@ -40,6 +42,7 @@ module.exports = function(sequelize, DataTypes) {
         UserLogin.hasMany(models.UserSession, {
           foreignKey: {
               name: 'userLoginId',
+              allowNull: false
           }
       })
         UserLogin.belongsTo(models.Vendor, {
@@ -55,6 +58,16 @@ module.exports = function(sequelize, DataTypes) {
               foreignKeyConstraint: true
           }})
       };
+
+    UserLogin.beforeCreate(async (userLogin, options) => {
+      const salt = await bcrypt.genSalt(10); //whatever number you want
+      userLogin.password = await bcrypt.hash(userLogin.password, salt);
+      return userLogin;      
+    });  
+
+    UserLogin.prototype.validPassword = async function(password) {
+      return await bcrypt.compare(password, this.password);
+    }
 
     return UserLogin
   }

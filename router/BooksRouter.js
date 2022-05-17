@@ -1,9 +1,14 @@
+const passport = require('passport');
 const booksController =  require('../controllers/BooksController')
 const router = require("express").Router();
+const bearerAuthenticated = require('../authentication')
 
-router.get("/", async (req, res) => {
-  await booksController.index(req, res)
-});
+router.get("/", 
+  bearerAuthenticated,
+  async (req, res) => {
+    await booksController.index(req, res)
+  }
+);
     // // Create a new Tutorial
     // router.post("/", tutorials.create);
     // Retrieve all Tutorials

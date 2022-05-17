@@ -1,7 +1,6 @@
 const express = require('express');
-const passport = require('passport');
-
 const booksRouter = require("./router/BooksRouter")
+const userSessionsRouter = require("./router/UserSessionsRouter")
 
 const app = express();
 
@@ -10,18 +9,8 @@ app.use(express.json());
 
 
 
-passport.use(new BearerStrategy(
-    function(token, done) {
-        return done(null, null, { scope: 'all' });
-        // User.findOne({ token: token }, function (err, user) {
-        // if (err) { return done(err); }
-        // if (!user) { return done(null, false); }
-        // return done(null, user, { scope: 'all' });
-        // });
-    }
-));
 
-
+app.use("/", userSessionsRouter)
 app.use("/books", booksRouter)
 
 
