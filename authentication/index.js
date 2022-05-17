@@ -13,7 +13,6 @@ passport.use(new BearerStrategy(
             return done(null, false); 
         }      
         const userLogin = await userSession.getUserLogin();  
-        console.log(userLogin)
         return done(null, userLogin);        
     }
 ));

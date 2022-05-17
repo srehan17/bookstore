@@ -69,6 +69,14 @@ module.exports = function(sequelize, DataTypes) {
       return await bcrypt.compare(password, this.password);
     }
 
+    UserLogin.prototype.isCustomer = function() {
+      return !!this.customerId;
+    }
+
+    UserLogin.prototype.isVendor = function() {
+      return !!this.vendorId;
+    }
+
     return UserLogin
   }
 
