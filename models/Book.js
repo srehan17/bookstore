@@ -13,11 +13,14 @@ module.exports = function(sequelize, DataTypes) {
       allowNull: false,
       validate: {
         notNull: {
-          msg: 'Please enter title'
+          msg: 'title null'
+        },
+        notEmpty: {
+          msg: 'title empty'
         },
         len: {
           args: [1,255],
-          msg: 'Title should be between 1 and 255 characters'
+          msg: 'Title should be less than 255'
         }
       }
     },
@@ -26,7 +29,10 @@ module.exports = function(sequelize, DataTypes) {
       allowNull: false,
       validate: {
         notNull: {
-          msg: 'Please enter isbn'
+          msg: 'isbn null'
+        },
+        notEmpty: {
+          msg: 'isbn empty'
         },
       }
     },
@@ -35,11 +41,14 @@ module.exports = function(sequelize, DataTypes) {
         allowNull: false,
         validate: {
           notNull: {
-            msg: 'Please enter author'
+            msg: 'author name null'
+          },
+          notEmpty: {
+            msg: 'author name empty'
           },
           len: {
             args: [1,255],
-            msg: 'Author name can be between 1 and 255 characters'
+            msg: 'Author name should be less than 255'
           }
         }
     },
@@ -52,12 +61,22 @@ module.exports = function(sequelize, DataTypes) {
     price: {
         type: DataTypes.DECIMAL,
         allowNull: false,
-        min: 0,
-        max: 10000,
         validate: {
           notNull: {
-            msg: 'Please enter price'
+            msg: 'price null'
+          },
+          notEmpty: {
+              msg: 'price empty'
+          },
+          max: {
+            args: 10000,
+            msg: 'Price should be less than 10000'
           }
+        },
+        get() {
+          // Workaround until sequelize issue #8019 is fixed
+          const value = this.getDataValue('price');
+          return value === null ? null : parseFloat(value);
         }
     },
     sold: {
@@ -76,7 +95,16 @@ module.exports = function(sequelize, DataTypes) {
 			foreignKey: {
         name: 'vendorId',
 				allowNull: false,
-        foreignKeyConstraint: true
+        allowEmpty: false,
+        foreignKeyConstraint: true,
+        validate: {
+          notNull: {
+            msg: "vendorId cannot be null"
+          },
+          notEmpty: {
+            msg: "vendorId cannot be empty"
+          }
+        }
       }
 		}),
     Book.belongsTo(models.Order, {

@@ -14,12 +14,13 @@ const envConfigs = {
         }
     },
     test: {
-        database: "bookstore_test",
+        database: "bookstore_tests",
         username: "postgres",
         password: "postgres",
         connection: {
             host: "localhost",
             dialect: "postgres",
+            logging: false,
             pool: {
               max: 5,
               min: 0,

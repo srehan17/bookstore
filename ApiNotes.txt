@@ -1,0 +1,52 @@
+
+Sign In
+=========================
+Description: Creates a UserSession if the email/password are found, otherwise sends an Access Denied error
+Endpoint: POST /sign_in
+Body (Json): 
+{
+    email: <email>,
+    password: <password>
+}
+
+Response: 
+Success: 200
+{
+    auth_token: <auth_token>
+}
+
+Error: 401
+{
+    error: "Access Denied"
+}
+
+
+Sign Out
+=========================
+Description: Destroys the user session associated with the Auth Token sent. If the auth token is not valid, no error is sent
+Endpoint: DELETE /sign_out
+Header: Authorization: Bearer <auth_token>
+Body: NULL
+
+Response: 
+Success: 204
+Body: NULL
+
+
+
+List Books
+=========================
+
+Endpoint: GET /books
+Header: Authorization: "Bearer <auth_token>"
+
+Response:
+Success: 200
+Body:
+[
+    {
+
+    }
+
+]
+

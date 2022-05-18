@@ -1,7 +1,12 @@
 const models = require("../models");
 const book = require("../models/book");
 
-// Create an order
+/**
+ * Creates an order
+ * @param {int} customerId - id of customer whose order needs to be created 
+ * @returns order 
+ * @throws {Error} - customerId must be passed
+ */
 module.exports.createOrder = async (params) => {
     let order = await models.Order.create(
         {
@@ -23,6 +28,13 @@ module.exports.createOrder = async (params) => {
     return order;
 }
 
+/**
+ * Order completed
+ * @param {int} orderId 
+ * @returns order
+ * @throws {Error} - orderId must be passed
+ */
+
 module.exports.completeOrder = async(orderId) => {
     let order = await models.Order.findByPk(orderId)
     order.status = "completed"
@@ -39,8 +51,16 @@ module.exports.completeOrder = async(orderId) => {
             }
         }
     )
+    return order;
 }
 
+
+/**
+ * Updates an order
+ * @param {int} orderId, {int} array of bookIds  
+ * @returns null 
+ * @throws {Error} - orderId must be passed
+ */
 // Customer can change an order: update all previous books to a new selecton of books
 // orderId, previous bookIds to same orderId and new bookIds. delete reference of orderId from the previous books
 module.exports.updateOrder = async (orderId, bookIds) => {
@@ -71,6 +91,13 @@ module.exports.updateOrder = async (orderId, bookIds) => {
     )
 }
 
+
+/**
+ * Gets orders by customerId
+ * @param {int} orderId  
+ * @returns listOfOrders for customerId
+ * @throws {Error} - if no customerId passed
+ */
 // Customer can see all their orders (Order No, Date, No of Books, Status)
 module.exports.getOrdersByCustomerId = async(customerId) => {
     let listOfAllOrders = await models.Order.findAll( 
@@ -81,17 +108,16 @@ module.exports.getOrdersByCustomerId = async(customerId) => {
             }
         }
     )
-
-    for (b of listOfAllOrders) {
-        console.log(`-----------LIST OF ALL ORDERS FOR CUSTOMER: ${(await b.getCustomer()).name}----------------\n`)
-        console.log(`Order No: ${b.id}, Order Date: ${b.orderDate}, Number of Books: ${(await b.getBooks()).length}, Order status: ${b.status}`);
-    }
-    console.log("\n-------------------------------------------------")
-
     return listOfAllOrders;
 }
 
 
+/**
+ * Gets order details
+ * @param {int} orderId  
+ * @returns orderDetails
+ * @throws {Error} - orderId must be passed
+ */
 // Customer can see details of their particular order
 module.exports.getOrderDetails = async(orderId) => {
     let orderDetails = await models.Order.findAll( 
@@ -107,23 +133,16 @@ module.exports.getOrderDetails = async(orderId) => {
             }
         }
     );
-
-    let order = await JSON.stringify(orderDetails, null, 4);
-    // console.log(order);
-    let parsedObject = await JSON.parse(order);
-    // console.log(parsedObject);
-    let books = parsedObject[0]["Books"];
-
-    console.log("**********************************************\n");
-    console.log(`Order No: ${parsedObject[0].id} \n Order Date: ${parsedObject[0].orderDate} \n Number of Books: ${(await books.length)} \n Status: ${parsedObject[0].status}`);
-    console.log("\n List of books in this order: ")
-    books.forEach(b=> {console.log(`\t ${b.title} by ${b.author}`)});
-    console.log("\n**********************************************");
-    
     return orderDetails;
 }
 
 
+/**
+ * Cancel an order that has not been completed yet
+ * @param {int} orderId - to be deleted 
+ * @returns 1 if order is found, 0 if order is not found
+ * @throws {Error} - orderId must be passed where status: "received"
+ */
 // Can cancel an order that has not been completed yet - order delete and change orderId to null -- cascade Delete (only foreign key nullify - not delete the book)
 module.exports.cancelOrderThatHasNotBeenCompletedYet = async(orderId) => {
     await models.Order.destroy(

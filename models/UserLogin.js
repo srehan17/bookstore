@@ -15,10 +15,10 @@ module.exports = function(sequelize, DataTypes) {
         unique: true,
         validate: {
           notNull: {
-            msg: 'Please enter email'
+            msg: 'email is null'
           },
           isEmail: {
-            msg: 'Please enter valid email'
+            msg: 'email should be valid'
           }
         }
       },
@@ -48,8 +48,8 @@ module.exports = function(sequelize, DataTypes) {
         UserLogin.belongsTo(models.Vendor, {
           foreignKey: {
               name: 'vendorId',
-              unique: true
-              //TODO: Why no foreign key constraint ?
+              unique: true,
+              foreignKeyConstraint: true
           }})
         UserLogin.belongsTo(models.Customer, {
           foreignKey: {

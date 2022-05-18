@@ -13,21 +13,20 @@ module.exports = function(sequelize, DataTypes) {
         unique: true,
         validate: {
           notNull: {
-            msg: 'Please provide authtoken'
+            msg: 'authToken is null'
+          },
+          notEmpty: {
+            msg: 'authtoken is empty'
           }
         }
-      },      
-      createdAt: {
-        type: DataTypes.DATE,
-        allowNull: false,
-        defaultValue: Sequelize.fn('now')      
-      }
+      }           
     },  
     {
-          tableName: 'UserSessions',
-          timestamps: true,
-          schema: 'public'
-      })
+        tableName: 'UserSessions',
+        timestamps: true,
+        schema: 'public'
+    }
+  )
 
     UserSession.associate = function(models) {
       UserSession.belongsTo(models.UserLogin, {
@@ -41,12 +40,3 @@ module.exports = function(sequelize, DataTypes) {
 
     return UserSession;
   }
-
-//   UserSession: --
-//   - id: autogen
-//   - authToken: text [unique, not null]
-//   - expiresAt: timestamp
-//   - createdAt: timestamp
-//   - updatedAt: timestamp
-  
-  

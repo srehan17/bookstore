@@ -1,6 +1,12 @@
 const models = require("../models");
 
-// Create a vendor
+
+/**
+ * Creates a vendor
+ * @param {string} name - name of vendor to be created 
+ * @returns created vendor 
+ * @throws {Error}
+ */
 module.exports.createVendor = async (params) => {
     let vendor = models.Vendor.build({name: params.name});
     await vendor.save()

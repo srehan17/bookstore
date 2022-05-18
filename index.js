@@ -130,7 +130,7 @@ const customerUtils = require("./utils/CustomerUtils");
         //     }
         // );
 
-        await firstOrder.printOrder()
+        // await firstOrder.printOrder()
 
         // await firstOrder.destroy()
         // await secondOrder.printOrder()
@@ -185,6 +185,9 @@ const customerUtils = require("./utils/CustomerUtils");
 
         // Can cancel an order that has not been completed yet - order delete and change orderId to null -- cascade Delete (only foreign key nullify - not delete the book)
         // await orderUtils.cancelOrderThatHasNotBeenCompletedYet(firstOrder.id);
+
+        const books = await bookUtils.getBooks({author: "Beet"});
+        console.log(JSON.stringify(books, null, 3));
     }
     catch(err){
         console.log(err)

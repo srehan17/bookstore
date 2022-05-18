@@ -2,7 +2,15 @@ const models = require("../models");
 const { Op } = require('sequelize');
 const book = require("../models/book");
 
-// create a book
+/**
+ * Create a book
+ * @param {string} title - title of book to be created 
+ * @param {string} author - author of book to be created 
+ * @param {string} isbn - isbn of book to be created 
+ * @param {decimal} price - price of book to be created 
+ * @returns created book 
+ * @throws {Error}
+ */
 module.exports.createBook = async (params) => {
     return await models.Book.create(
         {
@@ -16,8 +24,17 @@ module.exports.createBook = async (params) => {
 }
 
 
-// Delete a book record 
+/**
+ * Deletes the book with a given id.
+ * @param {integer} id - Id of the book to be deleted 
+ * @returns 1 if the book was found and deleted, 0 if no book with id was found
+ * @throws {Error} - Id must be passed
+ */
 module.exports.deleteBook = async (id) => {
+    if(!id){
+        throw new Error("id is required")
+    }
+
     return await models.Book.destroy(
         { where: 
             {
@@ -27,31 +44,60 @@ module.exports.deleteBook = async (id) => {
     )
 }
 
+/**
+ * gets book with options
+ * @param {integer} id - Id of the book to be deleted 
+ * @returns 1 if the book was found and deleted, 0 if no book with id was found
+ * @throws {Error} - Id must be passed
+ */
+module.exports.getBooks = async (options) => {
+    query = {};
 
-// List all books for Vendor
-module.exports.getBooksByVendor = async (vendorId) => {
-    let booksForVendor = await models.Book.findAll(
+    if(options["vendorId"]){
+        query["vendorId"] = options["vendorId"]
+    }
+
+    if(options["author"]){
+        query["author"] = options["author"]
+    }
+
+    if(options["title"]){
+        query["title"] = options["title"]
+    }
+
+    if (options["sold"]) {
+        query["sold"] = options["sold"]
+    }
+
+    if (options["numberOfDaysSince"]) {
+        query["numberOfDaysSince"] = options["numberOfDaysSince"]
+    } 
+
+    // if (options["$Order.orderDate$"]) {
+        // const startedDate = new Date("2022-04-01 00:00:00");
+    //     query[{[Op.gt] : startedDate}] {
+    //     include: {
+    //         model: models.Order,
+    //         attributes: ["orderDate"],
+    //         required: true
+    //     }
+    // }
+    
+    let books = await models.Book.findAll(
         {
-            where: 
-            {
-                vendorId: vendorId
-            }
+            where: query
         }
     );
-    
-
+    return books;
+}
 
     // TODO: Remove Debugging Code from here and other places in Utils too
     // Write your debugging code in the main file.
     // because if you forget to later remove it, it will have a serious performance penalty
-    console.log(`Books for Vendor Id: ${vendorId}`)
-    for (b of booksForVendor){
-        console.log(" > " + b.title + " by " + b.author + " sold by Vendor Name " + (await b.getVendor()).name)
-    }
-
-    return booksForVendor;
-}
-
+    // console.log(`Books for Vendor Id: ${vendorId}`)
+    // for (b of booksForVendor){
+    //     console.log(" > " + b.title + " by " + b.author + " sold by Vendor Name " + (await b.getVendor()).name)
+    // }
 
 /* 
     TODO:  Can you combine 
@@ -74,73 +120,35 @@ module.exports.getBooksByVendor = async (vendorId) => {
         }
         sold: 
     }
-
 */
 
-
-// List all sold books for Vendor
-module.exports.getAllSoldBooksByVendor = async (vendorId) => {
-
-    let soldBooksByVendor = await models.Book.findAll(
-        {
-            where: 
-            {
-                vendorId: vendorId,
-                sold: true
-            }
-        }
-    );
-
     
-    if (soldBooksByVendor.length == 0) {
-        return console.log("None sold");
-    }
-    console.log(`Sold Books for Vendor Id: ${vendorId}`)
-    soldBooksByVendor.forEach(b =>{
-        console.log(" > " + b.title + " by " + b.author)
-    })
-    return soldBooksByVendor;
-}
+    // if (soldBooksByVendor.length == 0) {
+    //     return console.log("None sold");
+    // }
+    // console.log(`Sold Books for Vendor Id: ${vendorId}`)
+    // soldBooksByVendor.forEach(b =>{
+    //     console.log(" > " + b.title + " by " + b.author)
+    // })
+    // return soldBooksByVendor;
 
 
-// List all unsold books for Vendor
-module.exports.getAllUnsoldBooksByVendor = async (vendorId) => {
-    let unsoldBooksByVendor = await models.Book.findAll(
-        {
-            where: 
-            {
-                vendorId: vendorId,
-                sold: false
-            }
-        }
-    );
+//     if ((unsoldBooksByVendor.length == 0) && (unsoldBooksByVendor.length < booksByVendor.length)){ 
+//         return console.log(`All of the books for Vendor Id ${vendorId} have been sold`);
+//     }
 
+//     console.log(`Unsold Books for Vendor Id: ${vendorId}`)
     
-    let booksByVendor = await models.Book.findAll(
-        {
-            where: 
-            {
-                vendorId: vendorId,
-            }
-        }
-    );
+//     unsoldBooksByVendor.forEach(b =>{
+//         console.log(" > " + b.title + " by " + b.author)
+//     })
     
-    if ((unsoldBooksByVendor.length == 0) && (unsoldBooksByVendor.length < booksByVendor.length)){ 
-        return console.log(`All of the books for Vendor Id ${vendorId} have been sold`);
-    }
-
-    console.log(`Unsold Books for Vendor Id: ${vendorId}`)
-    
-    unsoldBooksByVendor.forEach(b =>{
-        console.log(" > " + b.title + " by " + b.author)
-    })
-    
-    return unsoldBooksByVendor;
-}
+//     return unsoldBooksByVendor;
+// }
 
 
 // List all sold books for Vendor in the last X days
-// TODO: This is incomplete, take the X days as paramter
+// TODO: This is incomplete, take the X days as parameter
 module.exports.soldBooksForVendorInLastXDays = async (vendorId) => {
     
     const startedDate = new Date("2022-04-01 00:00:00");
@@ -160,18 +168,7 @@ module.exports.soldBooksForVendorInLastXDays = async (vendorId) => {
                 "$Order.orderDate$": {[Op.gt] : startedDate}
             }
         }
-    );
-    // console.log
-    // if (soldBooksForVendorinLastXDays.length == 0) {
-    //     return console.log("None sold in specified timeline");
-    // }
-
-    // console.log(`Sold Books for Vendor Id: ${vendorId} in last X days`)
-    
-    // await soldBooksForVendorinLastXDays.forEach(b =>{
-    //     console.log(" > " + b.title + " by " + b.author)
-    // })
-    
+    );    
     return soldBooksForVendorinLastXDays;
 }
 
@@ -195,87 +192,3 @@ module.exports.updateBookThatHasNotBeenSold = async (params) => {
     )
     return bookToBeUpdated
 };
-    
-
-// Customer can see all available books ( available = not sold and not in any order)
-module.exports.getBooksThatHaveNotBeenSold = async () => {
-    let books = await models.Book.findAll(
-        {
-            where: {
-                sold: false
-            }
-        }
-    )
-    console.log("***********************************\n")
-    console.log("Books available for customer:")
-    books.forEach(
-        b => 
-        {
-            console.log(`${b.title} by ${b.author}`)
-        }
-    );
-    console.log("\n***********************************")
-    return books;
-} 
-
-
-// Customer can list all not sold books by title 
-module.exports.getBooksByTitle = async (params) => {
-    let booksByTitle = await models.Book.findAll(
-        {
-            where: {
-                sold: false
-            },
-            order: 
-            [
-                ['title', 'ASC']
-            ]
-        },
-        
-    );
-    console.log("***********************************\n");
-    console.log("Listing all books by title ")
-    booksByTitle.forEach(b=> {
-        console.log(b.title)
-    });
-    console.log("\n***********************************");
-    return booksByTitle;
-}
-
-// Customer can list all books by author 
-module.exports.getBooksByAuthor = async (author) => {
-    let booksByAuthor = await models.Book.findAll(
-        {
-            where: {
-                author: author,
-                sold: false
-            },   
-            order: 
-            [
-                ['title', 'ASC']
-            ]
-        }
-    );
-    console.log("***********************************\n");
-    console.log(`Searching books for Author ${author}`)
-    booksByAuthor.forEach(b=> {
-        console.log(b.title)
-    });
-    console.log("\n***********************************");
-    return booksByAuthor;
-}
-
-
-// // List all available books sorted by price
-// async function listAllBooksSortedByPrice(){
-//     let books = await models.Book.findAll({order: [
-//         ['price', 'ASC']
-//     ]});
-//     //console.log(books.map(b=> b.price))
-// }
-
-
-// - List all available books that belong to a category C
-
-
-// - List all available books whose title matches searchTerms K
