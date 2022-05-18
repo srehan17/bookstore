@@ -33,31 +33,31 @@ module.exports = function(sequelize, DataTypes) {
       },
     },  
     {
-          tableName: 'UserLogins',
-          timestamps: true,
-          schema: 'public'
-      })
+        tableName: 'UserLogins',
+        timestamps: true,
+        schema: 'public'
+    })
   
-      UserLogin.associate = function(models) {
-        UserLogin.hasMany(models.UserSession, {
-          foreignKey: {
-              name: 'userLoginId',
-              allowNull: false
-          }
-      })
-        UserLogin.belongsTo(models.Vendor, {
-          foreignKey: {
-              name: 'vendorId',
-              unique: true,
-              foreignKeyConstraint: true
-          }})
-        UserLogin.belongsTo(models.Customer, {
-          foreignKey: {
-              name: 'customerId',
-              unique: true,
-              foreignKeyConstraint: true
-          }})
-      };
+    UserLogin.associate = function(models) {
+      UserLogin.hasMany(models.UserSession, {
+        foreignKey: {
+            name: 'userLoginId',
+            allowNull: false
+        }
+    })
+    UserLogin.belongsTo(models.Vendor, {
+      foreignKey: {
+          name: 'vendorId',
+          unique: true,
+          foreignKeyConstraint: true
+      }})
+    UserLogin.belongsTo(models.Customer, {
+      foreignKey: {
+          name: 'customerId',
+          unique: true,
+          foreignKeyConstraint: true
+      }})
+    };
 
     UserLogin.beforeCreate(async (userLogin, options) => {
       const salt = await bcrypt.genSalt(10); //whatever number you want
