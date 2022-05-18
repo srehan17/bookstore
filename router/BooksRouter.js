@@ -4,7 +4,7 @@ const router = require("express").Router();
 const bearerAuthenticated = require('../authentication')
 
 router.get("/", 
-  // bearerAuthenticated,
+  bearerAuthenticated,
   async (req, res) => {
     await booksController.index(req, res)
   }
