@@ -12,8 +12,8 @@ passport.use(new BearerStrategy(
         if (!userSession) { 
             return done(null, false); 
         }      
-        const userLogin = await userSession.getUserLogin();  
-        return done(null, userLogin);        
+        const user = await userSession.getUser();  
+        return done(null, user);        
     }
 ));
 

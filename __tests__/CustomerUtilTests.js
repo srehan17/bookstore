@@ -22,9 +22,9 @@ test('customer is created', async () => {
     expect(loadedCustomer.name).toBe("Suzy Dan");
     expect(loadedCustomer.address).toBe("London ON");
     
-    let loadedCustomerUserLogin = await models.UserLogin.findOne({where: {email: "suzy@hotmail.com"}});
-    expect(loadedCustomerUserLogin).toBeDefined();
-    expect(loadedCustomerUserLogin.customerId).toBe(loadedCustomer.id)
+    let loadedCustomerUser = await models.User.findOne({where: {email: "suzy@hotmail.com"}});
+    expect(loadedCustomerUser).toBeDefined();
+    expect(loadedCustomerUser.customerId).toBe(loadedCustomer.id)
 
 });
 

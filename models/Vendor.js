@@ -29,7 +29,7 @@ module.exports = function(sequelize, DataTypes) {
     })
 
     Vendor.associate = function(models) {
-      Vendor.hasOne(models.UserLogin, {
+      Vendor.hasOne(models.User, {
         foreignKey: {
             name: 'vendorId',
             unique: true,
@@ -46,13 +46,3 @@ module.exports = function(sequelize, DataTypes) {
 
     return Vendor
   }
-
-  
-//   Vendor --
-// - id: autogen
-// - name: text [not null, max length: 255]
-// - createdAt: timestamp
-// - updatedAt: timestamp
-// *- books: has_many
-// *- userLogin: has_one
-

@@ -8,9 +8,9 @@ beforeAll(async () => {
 
 test('userlogin successfully created', async () => {    
 
-    let userLogin = models.UserLogin.build({email: "teh@tam.co", password: "abcd1234"})
+    let user = models.User.build({email: "teh@tam.co", password: "abcd1234"})
     try{
-        await userLogin.validate()
+        await user.validate()
     }catch(err){
         console.log("userlogin not created")
     }
@@ -19,9 +19,9 @@ test('userlogin successfully created', async () => {
 
 test('userlogin email cannot be null', async () => {    
 
-    let userLogin = models.UserLogin.build({})
+    let user = models.User.build({})
     try{
-        await userLogin.validate()
+        await user.validate()
     }catch(err){
         expect(err.message).toContain("email is null")
     }
@@ -30,9 +30,9 @@ test('userlogin email cannot be null', async () => {
 
 test('userlogin email should be valid email', async () => {    
 
-    let userLogin = models.UserLogin.build({email: "sksaj"})
+    let user = models.User.build({email: "sksaj"})
     try{
-        await userLogin.validate()
+        await user.validate()
     }catch(err){
         expect(err.message).toContain("email should be valid")
     }

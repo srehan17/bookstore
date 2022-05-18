@@ -3,7 +3,7 @@ const bcrypt = require("bcrypt");
 module.exports = function(sequelize, DataTypes) {
 
     
-    var UserLogin = sequelize.define('UserLogin',  {
+    var User = sequelize.define('User',  {
       id: {
         type: DataTypes.INTEGER,
         autoIncrement: true,
@@ -33,25 +33,25 @@ module.exports = function(sequelize, DataTypes) {
       },
     },  
     {
-        tableName: 'UserLogins',
+        tableName: 'Users',
         timestamps: true,
         schema: 'public'
     })
   
-    UserLogin.associate = function(models) {
-      UserLogin.hasMany(models.UserSession, {
+    User.associate = function(models) {
+      User.hasMany(models.UserSession, {
         foreignKey: {
-            name: 'userLoginId',
+            name: 'userId',
             allowNull: false
         }
     })
-    UserLogin.belongsTo(models.Vendor, {
+    User.belongsTo(models.Vendor, {
       foreignKey: {
           name: 'vendorId',
           unique: true,
           foreignKeyConstraint: true
       }})
-    UserLogin.belongsTo(models.Customer, {
+    User.belongsTo(models.Customer, {
       foreignKey: {
           name: 'customerId',
           unique: true,
@@ -59,37 +59,25 @@ module.exports = function(sequelize, DataTypes) {
       }})
     };
 
-    UserLogin.beforeCreate(async (userLogin, options) => {
+    User.beforeCreate(async (user, options) => {
       const salt = await bcrypt.genSalt(10); //whatever number you want
-      userLogin.password = await bcrypt.hash(userLogin.password, salt);
-      return userLogin;      
+      user.password = await bcrypt.hash(user.password, salt);
+      return user;      
     });  
 
-    UserLogin.prototype.validPassword = async function(password) {
-      return await bcrypt.compare(password, this.password);
+    User.prototype.validPassword = async function(password) {
+      return (await bcrypt.compare(password, this.password));
     }
 
-    UserLogin.prototype.isCustomer = function() {
+    User.prototype.isCustomer = function() {
       return !!this.customerId;
     }
 
-    UserLogin.prototype.isVendor = function() {
+    User.prototype.isVendor = function() {
       return !!this.vendorId;
     }
 
-    return UserLogin
+    return User
   }
 
-
-  
-// UserLogin --
-// - email: text [not null, valid email]
-// unique pincode
-// - password: text [not null]
-// - createdAt: timestamp
-// - updatedAt: timestamp
-// - unique: true
-// *- vendor: belongs_to
-// *- customer: belongs_to
-// *- userSessions: has_many 
 

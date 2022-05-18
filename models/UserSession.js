@@ -29,9 +29,9 @@ module.exports = function(sequelize, DataTypes) {
   )
 
     UserSession.associate = function(models) {
-      UserSession.belongsTo(models.UserLogin, {
+      UserSession.belongsTo(models.User, {
         foreignKey: {
-            name: 'userLoginId',
+            name: 'userId',
             allowNull: false,
             foreignKeyConstraint: true
         }

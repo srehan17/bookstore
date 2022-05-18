@@ -48,7 +48,7 @@ module.exports = function (sequelize, DataTypes) {
   );
 
   Customer.associate = function (models) {
-    Customer.hasOne(models.UserLogin, {
+    Customer.hasOne(models.User, {
       foreignKey: {
         name: "customerId",
         unique: true,
@@ -66,11 +66,3 @@ module.exports = function (sequelize, DataTypes) {
   return Customer;
 };
 
-// Customer --
-// - id: autogen
-// - name: text [not null, max length: 255]
-// - address: text [not null, max length: 500]
-// - createdAt: timestamp
-// - updatedAt: timestamp
-// *- userLogin: has_one
-// *- orders: has_many

@@ -1,34 +1,35 @@
 const models = require("../models");
+const crypto = require('crypto');
 
 module.exports.create = async (req, res) =>{
-    const userLogin = await models.UserLogin.findOne({
+    const user = await models.User.findOne({
         where: {
             email: req.body.email
         }
     })
     
-    if (!userLogin || !userLogin.validPassword(req.body.password)) { 
+    if (!user || !(await user.validPassword(req.body.password))) { 
         return res.status(401).send({error: "Access Denied"}); 
     }        
     
     const userSession = await models.UserSession.create({
-        userLoginId: userLogin.id,
-        authToken:`to_${Math.random()}`
+        userId: user.id,
+        authToken: crypto.randomUUID()
     })
     return res.status(201).send({authToken: userSession.authToken})
 }
 
     
 module.exports.destroy = async (req, res) =>{
-    let authToken = req.headers.authorization
-    if (authToken){
-        authToken = authToken.replace('Bearer ', '') // strip out bearer part
-    }
-    const userSession = await models.UserSession.findOne({
-        where: {
-            authToken: authToken
-        }
-    })
+    // let authToken = req.headers.authorization
+    // if (authToken){
+    //     authToken = authToken.replace('Bearer ', '') // strip out bearer part
+    // }
+    // const userSession = await models.UserSession.findOne({
+    //     where: {
+    //         authToken: authToken
+    //     }
+    // })
     
     if (userSession) { 
         await userSession.destroy()

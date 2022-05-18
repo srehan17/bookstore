@@ -4,7 +4,7 @@ Vendor --
 - createdAt: timestamp
 - updatedAt: timestamp
 *- books: has_many
-*- userLogin: has_one
+*- user: has_one
 
 
 Book --
@@ -20,7 +20,7 @@ Book --
 *- order: belongs_to
 
 
-UserLogin --
+User --
 - email: text [not null, valid email]
 - password: text [not null]
 - createdAt: timestamp
@@ -45,7 +45,7 @@ Customer --
 - address: text [not null, max length: 500]
 - createdAt: timestamp
 - updatedAt: timestamp
-*- userLogin: has_one
+*- user: has_one
 *- orders: has_many
 
 
@@ -90,7 +90,7 @@ For UUIDs, use DataTypes.UUID. It becomes the UUID data type for PostgreSQL and 
 
 
 Relations:
-hasOne || belongsTo (customer has one UserLogin)
+hasOne || belongsTo (customer has one User)
 hasMany || belongsTo (customer has many orders)
 belongsToMany || belongsToMany (customer belongs to many orders, can place many orders || order belongs to many customers)
 

@@ -19,9 +19,9 @@ test('vendor is created', async () => {
     let loadedVendor = await models.Vendor.findByPk(vendorTom.id);
     expect(loadedVendor.name).toBe("Tom");
     
-    let loadedVendorUserLogin = await models.UserLogin.findOne({where: {email: "tom@gmail.com"}});
-    expect(loadedVendorUserLogin).toBeDefined();
-    expect(loadedVendorUserLogin.vendorId).toBe(loadedVendor.id);
+    let loadedVendorUser = await models.User.findOne({where: {email: "tom@gmail.com"}});
+    expect(loadedVendorUser).toBeDefined();
+    expect(loadedVendorUser.vendorId).toBe(loadedVendor.id);
 
 });
 
