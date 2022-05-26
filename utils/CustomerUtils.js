@@ -16,3 +16,37 @@ module.exports.createCustomer = async (params) => {
 
     return customer    
 }
+
+
+/**
+ * Gets customers
+ * @returns customers
+ * @throws {Error}
+ */
+ module.exports.getCustomers = async (options) => {
+    let query = {}
+    let whereClause = {};
+
+    if(options["id"]){
+        whereClause["id"] = options["id"]
+    }
+    
+    if(options["sort"]) {
+        query["order"] = [[options["sort"], options["sort_direction"] || 'ASC' ]]
+    }
+
+    if(options["limit"]) {
+        query["limit"] = options["limit"]
+    }
+
+    if(options["offset"]) {
+        query["offset"] = options["offset"]
+    }
+
+    query["where"] = whereClause
+    query["attributes"] = ["id", "name", "address"]
+
+
+    let customers = await models.Customer.findAll(query);
+    return customers
+}

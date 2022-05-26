@@ -51,53 +51,60 @@ module.exports.deleteBook = async (id) => {
  * @throws {Error} - Id must be passed
  */
 module.exports.getBooks = async (options) => {
-    query = {};
+    let query = {}
+    let whereClause = {};
 
     if(options["vendorId"]){
-        query["vendorId"] = options["vendorId"]
+        whereClause["vendorId"] = options["vendorId"]
+    }
+
+    if(options["customerId"]){
+        whereClause["customerId"] = options["customerId"]
     }
 
     if(options["author"]){
-        query["author"] = options["author"]
+        whereClause["author"] = options["author"]
     }
 
     if(options["title"]){
-        query["title"] = options["title"]
+        whereClause["title"] = options["title"]
     }
 
     if (options["sold"]) {
-        query["sold"] = options["sold"]
+        whereClause["sold"] = options["sold"]
+    }
+
+    if (options["category"]) {
+        whereClause["category"] = options["category"]
     }
 
     if (options["numberOfDaysSince"]) {
-        query["numberOfDaysSince"] = options["numberOfDaysSince"]
+        whereClause["start_datetime"] = options["start_datetime"]
     } 
 
-    // if (options["$Order.orderDate$"]) {
-        // const startedDate = new Date("2022-04-01 00:00:00");
-    //     query[{[Op.gt] : startedDate}] {
-    //     include: {
-    //         model: models.Order,
-    //         attributes: ["orderDate"],
-    //         required: true
-    //     }
-    // }
+    if(options["limit"]) {
+        query["limit"] = options["limit"]
+    }
+
+    if(options["offset"]) {
+        query["offset"] = options["offset"]
+    }
+
+    if(options["sort"]) {
+        query["order"] = [[options["sort"], options["sort_direction"] || 'ASC' ]]
+    }
     
-    let books = await models.Book.findAll(
-        {
-            where: query
-        }
-    );
+    if(options["attributes"]) {
+        query["attributes"] = options["attributes"]
+    }
+
+    
+    query["where"] = whereClause
+
+
+    let books = await models.Book.findAll(query);
     return books;
 }
-
-    // TODO: Remove Debugging Code from here and other places in Utils too
-    // Write your debugging code in the main file.
-    // because if you forget to later remove it, it will have a serious performance penalty
-    // console.log(`Books for Vendor Id: ${vendorId}`)
-    // for (b of booksForVendor){
-    //     console.log(" > " + b.title + " by " + b.author + " sold by Vendor Name " + (await b.getVendor()).name)
-    // }
 
 /* 
     TODO:  Can you combine 
@@ -123,30 +130,6 @@ module.exports.getBooks = async (options) => {
 */
 
     
-    // if (soldBooksByVendor.length == 0) {
-    //     return console.log("None sold");
-    // }
-    // console.log(`Sold Books for Vendor Id: ${vendorId}`)
-    // soldBooksByVendor.forEach(b =>{
-    //     console.log(" > " + b.title + " by " + b.author)
-    // })
-    // return soldBooksByVendor;
-
-
-//     if ((unsoldBooksByVendor.length == 0) && (unsoldBooksByVendor.length < booksByVendor.length)){ 
-//         return console.log(`All of the books for Vendor Id ${vendorId} have been sold`);
-//     }
-
-//     console.log(`Unsold Books for Vendor Id: ${vendorId}`)
-    
-//     unsoldBooksByVendor.forEach(b =>{
-//         console.log(" > " + b.title + " by " + b.author)
-//     })
-    
-//     return unsoldBooksByVendor;
-// }
-
-
 // List all sold books for Vendor in the last X days
 // TODO: This is incomplete, take the X days as parameter
 module.exports.soldBooksForVendorInLastXDays = async (vendorId) => {

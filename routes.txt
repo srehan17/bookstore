@@ -1,0 +1,6 @@
+List -> GET /books
+Read -> GET /books/:id
+Create New -> POST /books
+Update -> PATCH /books/:id
+Delete -> DELETE /books/:id
+

@@ -1,5 +1,7 @@
 const models = require("../models");
 const book = require("../models/book");
+const Sequelize = require("sequelize");
+
 
 /**
  * Creates an order
@@ -29,14 +31,13 @@ module.exports.createOrder = async (params) => {
 }
 
 /**
- * Order completed
+ * Order status marked completed and books marked as sold
  * @param {int} orderId 
  * @returns order
  * @throws {Error} - orderId must be passed
  */
-
-module.exports.completeOrder = async(orderId) => {
-    let order = await models.Order.findByPk(orderId)
+module.exports.completeOrder = async(id) => {
+    let order = await models.Order.findByPk(id)
     order.status = "completed"
     await order.save()
 
@@ -93,23 +94,54 @@ module.exports.updateOrder = async (orderId, bookIds) => {
 
 
 /**
- * Gets orders by customerId
- * @param {int} orderId  
- * @returns listOfOrders for customerId
- * @throws {Error} - if no customerId passed
+ * Gets orders
+ * @returns orders
+ * @throws {Error} 
  */
-// Customer can see all their orders (Order No, Date, No of Books, Status)
-module.exports.getOrdersByCustomerId = async(customerId) => {
-    let listOfAllOrders = await models.Order.findAll( 
-        {
-            where: 
-            {
-                customerId: customerId
-            }
+module.exports.getOrders = async( options ) => {
+
+    let query = {}
+    let whereClause = {};
+
+    
+    if(options["id"]){
+        whereClause["id"] = options["id"]
+    }
+    
+    if(options["sort"]) {
+        query["order"] = [[options["sort"], options["sort_direction"] || 'ASC' ]]
+    }
+
+    if(options["limit"]) {
+        query["limit"] = options["limit"]
+    }
+
+    if(options["offset"]) {
+        query["offset"] = options["offset"]
+    }
+
+    if(options["attributes"]) {
+        query["attributes"] = options["attributes"]
+    }
+
+    if(query["attributes"].includes("booksCount")){
+        query["attributes"] = query["attributes"].filter(a => a !== "booksCount") // remove booksCount from array
+        query["attributes"] = query["attributes"].concat([[Sequelize.fn("COUNT", Sequelize.col("Books.id")), "booksCount"]])
+        query["include"] = {
+            model: models.Book,
+            attributes: [],
+            required: false
         }
-    )
-    return listOfAllOrders;
+        query["group"] = ["Order.id"]    
+    }
+
+    query["where"] = whereClause
+    
+
+    let orders = await models.Order.findAll(query)
+    return orders;
 }
+
 
 
 /**

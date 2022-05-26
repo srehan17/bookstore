@@ -5,10 +5,21 @@ const bearerAuthenticated = require('../authentication')
 
 router.get("/", 
   bearerAuthenticated,
-  async (req, res) => {
-    await booksController.index(req, res)
+  async (req, res, next) => {
+    await booksController.index(req, res, next)
   }
 );
+
+
+router.post("/", 
+  // bearerAuthenticated,
+  async (req, res) => {
+    res.send('create book')
+    // await booksController.index(req, res)
+  }
+);
+
+
     // // Create a new Tutorial
     // router.post("/", tutorials.create);
     // Retrieve all Tutorials

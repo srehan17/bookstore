@@ -1,6 +1,6 @@
 const BookCategory = Object.freeze({
     FICTION: "fiction", 
-    HUMOR: "humour", 
+    HUMOR: "humor", 
     POLITICS: "politics", 
     SCIENCE: "science", 
     TECH: "tech"

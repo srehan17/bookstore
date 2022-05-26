@@ -50,13 +50,22 @@ module.exports = function(sequelize, DataTypes) {
           name: 'vendorId',
           unique: true,
           foreignKeyConstraint: true
-      }})
+      }}
+    )
     User.belongsTo(models.Customer, {
       foreignKey: {
           name: 'customerId',
           unique: true,
           foreignKeyConstraint: true
-      }})
+      }}
+    )
+    User.belongsTo(models.Admin, {
+      foreignKey: {
+          name: 'adminId',
+          unique: true,
+          foreignKeyConstraint: true
+      }}
+    )
     };
 
     User.beforeCreate(async (user, options) => {
@@ -75,6 +84,10 @@ module.exports = function(sequelize, DataTypes) {
 
     User.prototype.isVendor = function() {
       return !!this.vendorId;
+    }
+
+    User.prototype.isAdmin = function() {
+      return !!this.adminId;
     }
 
     return User
