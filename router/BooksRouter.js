@@ -11,6 +11,14 @@ router.get("/",
 );
 
 
+router.get("/:id", 
+  bearerAuthenticated,
+  async (req, res, next) => {
+    await booksController.details(req, res, next)
+  }
+);
+
+
 router.post("/", 
   // bearerAuthenticated,
   async (req, res) => {

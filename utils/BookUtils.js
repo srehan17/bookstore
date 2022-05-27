@@ -70,10 +70,6 @@ module.exports.getBooks = async (options) => {
         whereClause["title"] = options["title"]
     }
 
-    if (options["sold"]) {
-        whereClause["sold"] = options["sold"]
-    }
-
     if (options["category"]) {
         whereClause["category"] = options["category"]
     }
@@ -98,6 +94,31 @@ module.exports.getBooks = async (options) => {
         query["attributes"] = options["attributes"]
     }
 
+    if (options["sold"]) {
+        whereClause["sold"] = options["sold"]
+    }
+
+    if (options["bookId"]) {
+        whereClause["id"] = options["bookId"]
+    }
+
+    if (options["searchTerm"]) {
+        searchTerm = options["searchTerm"];
+        whereClause = {
+            [Op.or] : [
+                {
+                    author: {
+                        [Op.iLike]: '%' + searchTerm + '%'          // case insensitive iLike for postgres only
+                    }
+                },
+                {
+                    title: {
+                        [Op.iLike]: '%' + searchTerm + '%'          // case insensitive iLike for postgres only
+                    }
+                }
+            ]
+        }
+    } 
     
     query["where"] = whereClause
 
